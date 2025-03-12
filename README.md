@@ -33,3 +33,9 @@ exception = 'echo a | grep b' >> bash  # Exception: Errno 1 (means "not found" i
 
 "ssh user@host" >> bashi               #  for interactive applications like ssh, stdout/stderr is not captured
 ```
+
+## These projects are nice too
+
+- [xonsh/xonsh](https://github.com/xonsh/xonsh)
+- [Apakottur/shpyx](https://github.com/Apakottur/shpyx)
+- [toasdriven/shell](https://github.com/toasdriven/shell)
