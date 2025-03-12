@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 
+
 from sh import Bash
+
 
 class Test:
     def __init__(self):
@@ -36,27 +38,31 @@ class Test:
             for num, expr, exception in self._failed:
                 print(f"\t#{num}: {str(expr):<50}\t{exception}")
 
+
 def tests():
-    bash = 'Bash(printStdout=False, printDebug=True)'
+    bash = 'Bash()'
     test = Test()
 
     test + (f'{bash}("echo $HOME")', "/home/kim")
-    test + (f'{bash} << "echo foo"', "foo")
-    test + (f'"echo $bar" >> {bash}', '')
+    test + (f'{bash} << "echo foo"', TypeError("unsupported operand type(s) for <<: 'Bash' and 'str'"))
+    test + (f'"echo $bar" >> {bash}', "")
 
-    test + (f'"alias" >> {bash}', FileNotFoundError(2, "No such file or directory"))
-    test + (f'"echo `rm ~/*`" >> {bash}', Exception('Subcommands are prohibited!'))
+    test + (f'type("alias" >> {bash}) is str', True)
+    test + (f'"alias" >> {bash}', None)
+    test + (f'"    " >> {bash}', None)
+    test + (f'"    " >> {bash}', "")
+
+    test + (f'"echo `touch tmp.txt` `rm tmp.txt`" >> {bash}', "")
     test + f'"ls -l" >> {bash}'
     test + f'"ls -l ~/*" >> {bash}'
-    test + f'"/usr/bin/grep alias /home/kim/.zshrc" >> {bash}'
     test + f'"/usr/bin/grep alias ~/.zshrc" >> {bash}'
     test + f'"/usr/bin/grep alias $HOME/.zshrc" >> {bash}'
     
-    test + (f'{bash} << "echo foo | grep foo"', Exception('Piping is not implemented: echo foo | grep foo!'))
-    test + (f'"dmesg | grep hda" >> {bash}', Exception('Piping is not implemented: dmesg | grep hda!'))
-    test + (f'"    " >> {bash}', Exception('Empty command: !'))
+    test + (f'"echo foo | grep foo" >> {bash}', "foo")
+    test + (f'"dmesg | grep abracadabra" >> {bash}', Exception("Errno 1"))
     
     test.verdict()
+
 
 if __name__ == "__main__":
     tests()
