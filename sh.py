@@ -2,6 +2,8 @@
 
 
 from typing import Optional
+
+
 class BashFormatted:
     """
     Call Bash commands easily
@@ -11,10 +13,10 @@ class BashFormatted:
     or      "echo hello" >> Bash()
     or      "ssh user@host" >> Bash(interactive=True)
     """
-  
+
     def __init__(self, interactive: bool = False) -> None:
         self.__i = interactive
- 
+
     def __call__(self, command: str) -> Optional[str]:
         if self.__i:
             return Bash.interactive(command)
@@ -27,13 +29,13 @@ class BashFormatted:
     @staticmethod
     def interactive(command: str) -> None:
         from subprocess import run
-   
+
         run(["bash", "-c", command], check=True)
 
     @staticmethod
     def execute(command: str) -> str:
         from subprocess import run
-      
+
         p = run(["bash", "-c", command], capture_output=True, text=True)
         if p.returncode != 0:
             raise Exception((p.stderr or p.stdout or f"Errno {p.returncode}").strip())
