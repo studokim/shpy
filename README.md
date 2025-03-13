@@ -38,4 +38,4 @@ exception = 'echo a | grep b' >> bash  # Exception: Errno 1 (means "not found" i
 
 - [xonsh/xonsh](https://github.com/xonsh/xonsh)
 - [Apakottur/shpyx](https://github.com/Apakottur/shpyx)
-- [toasdriven/shell](https://github.com/toasdriven/shell)
+- [toastdriven/shell](https://github.com/toastdriven/shell)
