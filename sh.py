@@ -19,9 +19,9 @@ class BashFormatted:
 
     def __call__(self, command: str) -> Optional[str]:
         if self.__i:
-            return Bash.interactive(command)
+            return BashFormatted.interactive(command)
         else:
-            return Bash.execute(command)
+            return BashFormatted.execute(command)
 
     def __rrshift__(self, command: str) -> Optional[str]:
         return self.__call__(command)
