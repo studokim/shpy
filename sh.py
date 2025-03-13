@@ -36,7 +36,7 @@ class BashFormatted:
     def execute(command: str) -> str:
         from subprocess import run
 
-        p = run(["bash", "-c", command], capture_output=True, text=True)
+        p = run(["bash", "-c", "set -o errexit -o nounset -o pipefail; " + command], capture_output=True, text=True)
         if p.returncode != 0:
             raise Exception((p.stderr or p.stdout or f"Errno {p.returncode}").strip())
         return p.stdout.strip()
@@ -55,7 +55,7 @@ class Bash:
         run(["bash", "-c", command], check=True)
     def execute(command):
         from subprocess import run
-        p = run(["bash", "-c", command], capture_output=True, text=True)
+        p = run(["bash", "-c", "set -o errexit -o nounset -o pipefail; " + command], capture_output=True, text=True)
         if p.returncode != 0: raise Exception((p.stderr or p.stdout or f"Errno {p.returncode}").strip())
         return p.stdout.strip()
 
