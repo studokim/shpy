@@ -30,7 +30,7 @@ class BashFormatted:
     def interactive(command: str) -> None:
         from subprocess import run
 
-        run(["bash", "-c", command], check=True)
+        run(["bash", "-c",  "set -o errexit -o nounset -o pipefail; " + command], check=True)
 
     @staticmethod
     def execute(command: str) -> str:
@@ -52,7 +52,7 @@ class Bash:
         return self.__call__(command)
     def interactive(command):
         from subprocess import run
-        run(["bash", "-c", command], check=True)
+        run(["bash", "-c",  "set -o errexit -o nounset -o pipefail; " + command], check=True)
     def execute(command):
         from subprocess import run
         p = run(["bash", "-c", "set -o errexit -o nounset -o pipefail; " + command], capture_output=True, text=True)
