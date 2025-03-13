@@ -61,8 +61,13 @@ class Bash:
 
 
 def main():
-    out = "echo Hello world" >> Bash()
-    print(out)
+    tmpdir = "mktemp -d" >> Bash()
+    tmpfile = f"{tmpdir}/file.txt"
+    f"echo 'Edit me!' > {tmpfile}" >> Bash()
+    f"nano {tmpfile}" >> Bash(True)
+    sep = f"\n{'-' * 40}\n"
+    print(f'echo "fine, now {tmpfile} contains:{sep}`cat {tmpfile}`{sep}"' >> Bash())
+    f"rm -rf {tmpdir}" >> Bash()
 
 
 if __name__ == "__main__":
